@@ -24,7 +24,7 @@ backup_path = "omnivore_backup.json"
 search = "in:all"
 limit = 100
 timeout = 15
-with_content = False
+with_content = True
 
 add_date_to_path = True
 
