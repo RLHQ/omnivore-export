@@ -12,8 +12,12 @@ from os import environ
 from gql import gql, Client
 from gql.transport.httpx import HTTPXTransport
 
-api_url = "https://api-prod.omnivore.app/api/graphql"
-api_key = "FFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF"
+import dotenv
+
+dotenv.load_dotenv()  # Load .env file if it exists
+
+api_url = environ.get('OMNIVORE_API_URL', "https://api-prod.omnivore.app/api/graphql")
+api_key = environ.get('OMNIVORE_API_KEY', "FFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF")
 
 backup_path = "omnivore_backup.json"
 
@@ -104,13 +108,13 @@ def get_all(url, key):
 def save_backup(data, path):
     print("Saving data...")
     with open(path, 'w', encoding='utf-8') as backup:
-        dump(data, backup)
+        dump(data, backup, ensure_ascii=False, indent=4)
 
 
 def main():
-    url = environ.get('OMNIVORE_API_URL', api_url)
-    key = environ.get('OMNIVORE_API_KEY', api_key)
-    nodes = get_all(url, key)
+    # url = environ.get('OMNIVORE_API_URL', api_url)
+    # key = environ.get('OMNIVORE_API_KEY', api_key)
+    nodes = get_all(api_url, api_key)
     print("Number of links:", len(nodes))
     path = environ.get('OMNIVORE_BACKUP_PATH', backup_path)
     if add_date_to_path:

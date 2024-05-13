@@ -11,8 +11,12 @@ from os import environ
 from gql import Client, gql
 from gql.transport.httpx import HTTPXTransport
 
-api_url = "https://api-prod.omnivore.app/api/graphql"
-api_key = "FFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF"
+import dotenv
+
+dotenv.load_dotenv()  # Load .env file if it exists
+
+api_url = environ.get('OMNIVORE_API_URL', "https://api-prod.omnivore.app/api/graphql")
+api_key = environ.get('OMNIVORE_API_KEY', "FFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF")
 
 search = "in:all"
 limit = 100
@@ -124,10 +128,10 @@ def summarize(nodes):
 
 
 def main():
-    url = environ.get('OMNIVORE_API_URL', api_url)
-    key = environ.get('OMNIVORE_API_KEY', api_key)
+    # url = environ.get('OMNIVORE_API_URL', api_url)
+    # key = environ.get('OMNIVORE_API_KEY', api_key)
 
-    nodes = get_all(url, key)
+    nodes = get_all(api_url, api_key)
     summarize(nodes)
 
 
