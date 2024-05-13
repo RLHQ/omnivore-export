@@ -13,6 +13,7 @@ from gql import gql, Client
 from gql.transport.httpx import HTTPXTransport
 
 import dotenv
+from markdownify import markdownify as md
 
 dotenv.load_dotenv()  # Load .env file if it exists
 
@@ -107,6 +108,9 @@ def get_all(url, key):
 
 def save_backup(data, path):
     print("Saving data...")
+    for item in data:
+        item['content'] = md(item['content']) 
+
     with open(path, 'w', encoding='utf-8') as backup:
         dump(data, backup, ensure_ascii=False, indent=4)
 
