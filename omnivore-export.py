@@ -106,10 +106,18 @@ def get_all(url, key):
     return all_nodes
 
 
+def remove_html_tags(text):
+    """Remove html tags from a string"""
+    import re
+    clean = re.compile(r'<[^>]+>')
+    return re.sub(clean, '', text)
+
+
 def save_backup(data, path):
     print("Saving data...")
     for item in data:
-        item['content'] = md(item['content']) 
+        item['text'] = remove_html_tags(item['content'])
+        item['markdown'] = md(item['content']) 
 
     with open(path, 'w', encoding='utf-8') as backup:
         dump(data, backup, ensure_ascii=False, indent=4)
