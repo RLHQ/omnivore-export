@@ -31,11 +31,11 @@ add_date_to_path = True
 
 query_export = """
 query Export($search: String!,
-             $limit: Int!, $after: String,
-             $withContent: Boolean!) {
+            $limit: Int!, $after: String,
+            $withContent: Boolean!) {
     search(query: $search, 
-           first: $limit, after: $after,
-           includeContent: $withContent) {
+            first: $limit, after: $after,
+            includeContent: $withContent) {
         ... on SearchSuccess {
             edges {
                 node {
@@ -91,7 +91,7 @@ def get_all(url, key):
     client = Client(transport=transport)
     query = gql(query_export)
     variables = {'search': search, 'limit': limit, 'after': None,
-                 'withContent': with_content}
+                'withContent': with_content}
     all_nodes = []
     while True:
         print(".", end="", flush=True)
