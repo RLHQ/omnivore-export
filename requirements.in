@@ -1,3 +1,4 @@
-gql==3.5.0
+gql==3.4.1
 markdownify==0.12.1
+omnivoreql==0.2.2
 python-dotenv==1.0.1

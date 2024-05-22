@@ -10,7 +10,8 @@ from json import dump
 from os import environ
 
 from gql import gql, Client
-from gql.transport.httpx import HTTPXTransport
+# from gql.transport.httpx import HTTPXTransport
+from gql.transport.requests import RequestsHTTPTransport
 
 import dotenv
 from markdownify import markdownify as md
@@ -87,7 +88,8 @@ query Export($search: String!,
 def get_all(url, key):
     print("Reading data...")
     headers = {'Authorization': key}
-    transport = HTTPXTransport(url=url, headers=headers, timeout=timeout)
+    # transport = HTTPXTransport(url=url, headers=headers, timeout=timeout)
+    transport = RequestsHTTPTransport(url=url, headers=headers, timeout=timeout)
     client = Client(transport=transport)
     query = gql(query_export)
     variables = {'search': search, 'limit': limit, 'after': None,
